@@ -1,0 +1,33 @@
+# Eclipse files
+.project
+.classpath
+.settings/
+
+# Output folders
+bin/
+target/
+build/
+
+# OS-generated
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Java
+*.class
+
+# Maven
+.mvn/
+target/
+!src/**/application.properties
+
+# Test reports
+test-output/
+allure-results/
+allure-report/
+
+# Misc
+*.tmp
+*.swp
