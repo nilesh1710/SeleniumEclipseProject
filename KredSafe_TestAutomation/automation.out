@@ -20662,3 +20662,5 @@ Session ID: bed7136c401810e1016909ec0b84acef
 2025-07-31 15:18:40 INFO  ClientLoginPage:127 - Clicking on accept button
 2025-07-31 15:35:55 INFO  TC29_Verifyformrequest:43 - <===========Started Verifying RegisterUsingOnlineApplication===========> 
 2025-07-31 15:36:20 INFO  ClientLoginPage:127 - Clicking on accept button
+2025-08-04 17:13:12 INFO  TC03_verifyProfileDetailsFunctionality:48 - <===========Started Verifying RegisterUsingOnlineApplication===========> 
+2025-08-04 17:13:44 INFO  ClientLoginPage:127 - Clicking on accept button
