@@ -1,10 +1,10 @@
-name: Java CI for Selenium
+name: Java CI with manual TestNG
 
 on:
   push:
-    branches: [ master, main ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ master, main ]
+    branches: [ main, master ]
 
 jobs:
   build:
@@ -20,19 +20,20 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      - name: Set up Chrome
-        uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: latest
+      - name: Create lib folder and download TestNG
+        run: |
+          mkdir lib
+          curl -L -o lib/testng.jar https://repo1.maven.org/maven2/org/testng/testng/7.9.0/testng-7.9.0.jar
 
-      - name: Verify Chrome installation
-        run: chrome --version
-
-      - name: Build with Maven
+      - name: Compile code manually using testng.jar
         working-directory: KredSafe_TestAutomation
-        run: mvn clean install -DskipTests
+        run: |
+          mkdir -p target/classes
+          javac -cp "lib/testng.jar" -d target/classes $(find src/main/java -name "*.java")
 
-      - name: Run Selenium tests
+      - name: Run tests manually using testng
         working-directory: KredSafe_TestAutomation
-        run: mvn test
+        run: |
+          java -cp "lib/testng.jar;target/classes" org.testng.TestNG testng.xml
+
 
