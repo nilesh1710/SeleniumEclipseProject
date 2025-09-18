@@ -1,4 +1,4 @@
-name: Java CI
+name: Java CI for Selenium
 
 on:
   push:
@@ -19,12 +19,20 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-          
+
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: latest
+
+      - name: Verify Chrome installation
+        run: chrome --version
+
       - name: Build with Maven
         working-directory: KredSafe_TestAutomation
-        run: mvn clean install
+        run: mvn clean install -DskipTests
 
-      - name: Run tests
+      - name: Run Selenium tests
         working-directory: KredSafe_TestAutomation
         run: mvn test
 
