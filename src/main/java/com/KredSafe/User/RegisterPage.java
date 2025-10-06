@@ -21,13 +21,17 @@ import javax.mail.search.SearchTerm;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import com.KredSafe.TestBase.TestBase;
 import junit.framework.Assert;
 
@@ -673,7 +677,26 @@ public class RegisterPage extends TestBase {
 		}
 
 	}
-
+	
+	@FindBy(xpath = "//button[span[text()=' Cancel Subscription']]")
+	WebElement scancle;
+	
+	@FindBy(xpath = "//*[@id=\"cancel_reason\"]")
+	WebElement canclereason;
+	
+	@FindBy(xpath = "//*[@id=\"cancel-sub-btn\"]")
+	WebElement canclebtn;
+	
+	
+	public void Subscriptioncanclelans() throws InterruptedException, IOException {
+		wait_in_seconds(10);
+		driver.get("https://dev.kredsafe.net/user/subscription/dashboard");
+		wait_in_seconds(10);
+		scancle.click();
+		wait_in_seconds(10);
+		canclereason.sendKeys("testsubcancle");
+		canclebtn.click();
+	}
 
 	public void FormPlans() throws InterruptedException, IOException {
 		wait_for_page_load(10);
@@ -879,6 +902,84 @@ public class RegisterPage extends TestBase {
 		driver.switchTo().frame("ifmail");
 		String OTP = OTPCode.getText();
 		System.out.printf("Capture OTP code is: " + OTP);
+	}
+	
+	public void accessYopmaiforloginlock() throws InterruptedException {
+		// Open new tab and switch to it
+		((JavascriptExecutor) driver).executeScript("window.open()");
+		ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
+		driver.switchTo().window(tabs.get(1));
+
+		// Go to Yopmail
+		driver.get("https://yopmail.com/");
+
+		// Enter email and submit (usually pressing Enter after typing)
+		WebElement emailField = driver.findElement(By.id("login"));
+		emailField.sendKeys("ts1234@yopmail.com" + Keys.ENTER);
+
+		// Wait for inbox iframe to load
+		WebDriverWait wait = new WebDriverWait(driver, 20);
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt("ifinbox"));
+
+		// Now, inside the iframe, wait for the email list or body to contain your expected text
+		wait.until(ExpectedConditions.textToBePresentInElementLocated(
+		    //By.tagName("body"), "Your Primary Email Address Has Been Updated Successfully"));
+		  By.tagName("body"), "Failed Login Attempt Alert"));
+		
+		
+		// Get the text inside the iframe body
+		String bodyText = driver.findElement(By.tagName("body")).getText();
+		System.out.println("\n📄 Inbox Body Text:\n" + bodyText);
+
+		// Check the expected message
+	
+		if (bodyText.contains("Failed Login Attempt Alert")) {
+		   System.out.println("✅ PASS: 'Failed Login Attempt Alert' message is displayed.");
+		} else {
+		    System.out.println("❌ FAIL: Expected 'Failed Login Attempt Alert' message not found.");
+		}
+
+		// Switch back to default content when done
+		driver.switchTo().defaultContent();
+
+	}
+	public void accessYopmaiforPrimaryemail() throws InterruptedException {
+		// Open new tab and switch to it
+		((JavascriptExecutor) driver).executeScript("window.open()");
+		ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
+		driver.switchTo().window(tabs.get(1));
+
+		// Go to Yopmail
+		driver.get("https://yopmail.com/");
+
+		// Enter email and submit (usually pressing Enter after typing)
+		WebElement emailField = driver.findElement(By.id("login"));
+		emailField.sendKeys("sep10@yopmail.com" + Keys.ENTER);
+
+		// Wait for inbox iframe to load
+		WebDriverWait wait = new WebDriverWait(driver, 20);
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt("ifinbox"));
+
+		// Now, inside the iframe, wait for the email list or body to contain your expected text
+		wait.until(ExpectedConditions.textToBePresentInElementLocated(
+		    //By.tagName("body"), "Your Primary Email Address Has Been Updated Successfully"));
+		  By.tagName("body"), "Your Primary Email Address Has Been Updated Successfully"));
+		
+		
+		// Get the text inside the iframe body
+		String bodyText = driver.findElement(By.tagName("body")).getText();
+		System.out.println("\n📄 Inbox Body Text:\n" + bodyText);
+
+		// Check the expected message
+	if (bodyText.contains("Your Primary Email Address Has Been Updated Successfully")) {
+		   System.out.println("✅ PASS: 'Your Primary Email Address Has Been Updated Successfully' message is displayed.");
+		} else {
+		   System.out.println("❌ FAIL: Expected 'Your Primary Email Address Has Been Updated Successfully.' message not found.");
+		}
+		
+		// Switch back to default content when done
+		driver.switchTo().defaultContent();
+
 	}
 
 	@SuppressWarnings("resource")

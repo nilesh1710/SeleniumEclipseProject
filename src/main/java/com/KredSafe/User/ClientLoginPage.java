@@ -363,6 +363,74 @@ public class ClientLoginPage extends TestBase {
 		System.out.println("List of activity count is " + list);
 		scrollToElement(inputField);
 	}
+	public void Verifyfaillogin() throws InterruptedException, AWTException {
+		wait_in_seconds(5);
+		for (int i = 0; i < 6; i++) {
+		    // Wait for email input presence and re-locate elements fresh each time
+		    WebDriverWait wait = new WebDriverWait(driver, 10);
+		    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@name='email']")));
+
+		    WebElement loginField = driver.findElement(By.xpath("//input[@name='email']"));
+		    WebElement passwordField = driver.findElement(By.xpath("//input[@name='password']"));
+		    WebElement signInButton = driver.findElement(By.xpath("//button[contains(@class, 'btn-block')]"));
+
+		    loginField.clear();
+		    loginField.sendKeys("ts1234@yopmail.com");
+
+		    passwordField.clear();
+		    passwordField.sendKeys("345523");
+
+		    scrollDownToElement(signInButton);
+
+		    // Click using JS if normal click doesn’t work
+		    click_Element_Using_JS(signInButton);
+
+		    // Wait a bit for page to reload or update
+		    Thread.sleep(2000);
+
+		    System.out.println("Attempt " + (i + 1) + " completed. Current URL: " + driver.getCurrentUrl());
+		}
+
+		// Wait explicitly for the error message after all attempts
+		WebDriverWait wait = new WebDriverWait(driver, 15);
+		wait.until(ExpectedConditions.textToBePresentInElementLocated(
+		    By.tagName("body"), "Too many login attempts"));
+
+		String bodyText = driver.findElement(By.tagName("body")).getText();
+		System.out.println("\n📄 Page Body Text:\n" + bodyText);
+
+		if (bodyText.contains("Too many login attempts. Please try again in")) {
+		    System.out.println("✅ PASS: 'Too many login attempts.' message is displayed.");
+		} else {
+		    System.out.println("❌ FAIL: Expected 'Too many login attempts.' message not found.");
+		}
+
+      
+	}
+	
+	public void Subscriptiontotal() throws InterruptedException, AWTException {
+		waitInSeconds(10);
+	     driver.get("https://dev.kredsafe.net/user/subscription/dashboard");
+	     wait_for_page_load(10);
+	     scrollDown();
+	     String pageText = driver.findElement(By.tagName("body")).getText();
+	          	        
+	        WebElement subscriptionElement = driver.findElement(By.xpath("//span[@class='pill green']"));
+	        String subscriptionValue = subscriptionElement.getText();
+	        System.out.println("Subscription - " + subscriptionValue);
+
+	         WebElement formsPacketElement = driver.findElement(By.xpath("//span[@class='pill yellow']"));
+	        String formsPacketValue = formsPacketElement.getText();
+	        System.out.println("Forms and Packet - " + formsPacketValue);
+	        
+	        WebElement totalElement = driver.findElement(By.xpath("//span[@class='pill red']"));
+	        String totalValue = totalElement.getText();
+	         System.out.println("Total - " + totalValue);
+	   
+	          
+	     }
+	
+
 	
 	
 	@FindBy(xpath = "//*[@id=\"flashMsgTxt\"]")
@@ -458,13 +526,15 @@ public class ClientLoginPage extends TestBase {
 
 	public void PrimaryEmail() throws InterruptedException, AWTException {
 		wait_for_page_load(10);
-		wait_for_element_present(profile);
-		click_Element_Using_JS(profile);
-		wait_in_seconds(10);
-		click_Element_Using_JS(personalDetails);
-		wait_for_element_present(PrimarayEmail);
+	     driver.get("https://dev.kredsafe.net/user/overview");
+
+			/*
+			 * wait_for_element_present(profile); click_Element_Using_JS(profile);
+			 * wait_in_seconds(10); click_Element_Using_JS(personalDetails);
+			 * wait_for_element_present(PrimarayEmail);
+			 */
 		scrollToElement(PrimarayEmail);
-		PrimarayEmail.sendKeys("ts7876001@yopmail.com");
+		//PrimarayEmail.sendKeys("ts7876001@yopmail.com");
 		wait_for_element_present(MakePrimarayEmail);
 		click_Element_Using_JS(MakePrimarayEmail);
 		wait_in_seconds(10);
