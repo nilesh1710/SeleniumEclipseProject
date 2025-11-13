@@ -487,10 +487,10 @@ public class RegisterPage extends TestBase {
 			if (get_currenturl.equals("https://dev.kredsafe.net/user/subscriptions")) {
 				wait_for_element_present(oneyear);
 				click_Element_Using_JS(oneyear);
-				wait_for_element_present(sixmonth);
-				click_Element_Using_JS(sixmonth);
-				//wait_for_element_present(twelvemonth);
-				//click_Element_Using_JS(twelvemonth);
+				//wait_for_element_present(sixmonth);
+				//click_Element_Using_JS(sixmonth);
+				wait_for_element_present(twelvemonth);
+				click_Element_Using_JS(twelvemonth);
 				
 				wait_for_element_present(subscribeButton);
 				// scrollDown();
@@ -590,7 +590,7 @@ public class RegisterPage extends TestBase {
 				wait_for_page_load(10);
 				wait_for_element_present(cardNumber);
 				cardNumber.sendKeys("4111111111111111");
-				cardExpiry.sendKeys("09/25");
+				cardExpiry.sendKeys("09/27");
 				cardCVC.sendKeys("111");
 				billingName.sendKeys("hcheeti");
 				billingAddress.sendKeys("ct");
@@ -615,22 +615,22 @@ public class RegisterPage extends TestBase {
 			String get_currenturl = driver.getCurrentUrl();
 			if (get_currenturl.equals("https://dev.kredsafe.net/user/subscriptions")) {
 				//for 1 Year 
-				wait_for_element_present(poneyear);
-				click_Element_Using_JS(poneyear);
-				wait_for_element_present (ptwelvwmonth);
-				click_Element_Using_JS(ptwelvwmonth);
+//				wait_for_element_present(poneyear);
+//				click_Element_Using_JS(poneyear);
+//				wait_for_element_present (ptwelvwmonth);
+//				click_Element_Using_JS(ptwelvwmonth);
 				//wait_for_element_present(psixmonth);
 				//click_Element_Using_JS(psixmonth);
 				//for 3 Year 
-				//wait_for_element_present(pthreeyear);
-				//click_Element_Using_JS(pthreeyear);
+				wait_for_element_present(pthreeyear);
+				click_Element_Using_JS(pthreeyear);
 				///wait_for_element_present (pthreesixmonthr);
 				//click_Element_Using_JS(pthreesixmonthr);
 				wait_in_seconds(5);
 				//wait_for_element_present (pthreetwelvwmonth);
 				//click_Element_Using_JS(pthreetwelvwmonth);
-				//wait_for_element_present (pthreefullpay);
-				//click_Element_Using_JS(pthreefullpay);
+				wait_for_element_present (pthreefullpay);
+				click_Element_Using_JS(pthreefullpay);
 				
 				wait_for_element_present(psb);
 				// scrollDown();
@@ -651,7 +651,7 @@ public class RegisterPage extends TestBase {
 				click_Element_Using_JS(confirmAndPayButton);
 				wait_for_element_present(cardNumber);
 				cardNumber.sendKeys("4111111111111111");
-				cardExpiry.sendKeys("09/25");
+				cardExpiry.sendKeys("09/27");
 				cardCVC.sendKeys("111");
 				billingName.sendKeys("hcheeti");
 				billingAddress.sendKeys("Nagpur");

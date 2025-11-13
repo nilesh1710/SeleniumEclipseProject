@@ -411,6 +411,8 @@ public class ClientLoginPage extends TestBase {
 	public void Subscriptiontotal() throws InterruptedException, AWTException {
 		waitInSeconds(10);
 	     driver.get("https://dev.kredsafe.net/user/subscription/dashboard");
+	     //driver.get("http://paypal_dev.test:8080/user/subscription/dashboard");
+
 	     wait_for_page_load(10);
 	     scrollDown();
 	     String pageText = driver.findElement(By.tagName("body")).getText();
@@ -622,7 +624,7 @@ public class ClientLoginPage extends TestBase {
 	@FindBy(xpath = "/html/body/div[3]/aside/div/div[2]/nav/ul/li[8]/a/p")
 	WebElement Subscription;
 	
-	@FindBy(xpath = "//*[@id=\"subBoxInfoClose\"]/section/div/div/div[3]/div/div/div/div/div/ul/li[3]/a")
+	@FindBy(xpath = "//a[text()='Cancellation Requests']")
 	WebElement calcelltion;
 	
 	@FindBy(xpath = "//i[@class='fa fa-bell-o' and @title='follow up']")
@@ -631,7 +633,7 @@ public class ClientLoginPage extends TestBase {
 	WebElement folloupmsg;
 	@FindBy(xpath = "//*[@id=\"submitFollowUpForm\"]")
 	WebElement submitmsg;
-	@FindBy(xpath = "//*[@id=\"cancellationRequest\"]/tbody/tr/td[6]/a[2]/i")
+	@FindBy(xpath = "//i[contains(@class, 'fa-comments-o') and @title='follow up']")
 	WebElement comm;
 	
 	public void Followup() throws InterruptedException, AWTException {
@@ -642,9 +644,11 @@ public class ClientLoginPage extends TestBase {
       driver.navigate().to("https://dev.kredsafe.net/user/subscription/dashboard");
       //wait_for_element_present(Subscription);
      // Subscription.click();
-      wait_for_page_load(10);	
+      wait_for_page_load(10);
+      scrollDown();
       wait_for_element_present(calcelltion);
-      calcelltion.click();
+      click_Element_Using_JS(calcelltion);
+      //calcelltion.click();
       waitInSeconds(5);
       scrollDown();
       scrollDown();
@@ -660,14 +664,28 @@ public class ClientLoginPage extends TestBase {
       wait_in_seconds(5);
       wait_for_element_present(submitmsg);
       submitmsg.click();
+      wait_for_page_load(10);
       wait_in_seconds(10);
       scrollDown();
       scrollDown();
       scrollDown();
       scrollDown();
       scrollDown();
+      scrollDown();
+      scrollDown();
+      scrollDown();
+      scrollDown();
+      scrollDown();
+      scrollDown();
+      scrollDown();
+      scrollDown();
+      scrollDown();
+      scrollDown();
+      scrollDown();
+      scrollToElement(comm);
+      scrollDownToElement(comm);
       wait_for_element_present(comm);
-      comm.click();
+      click_Element_Using_JS(comm);
 	}
 
 	public void LoginLogout() throws InterruptedException, AWTException {
@@ -900,6 +918,39 @@ public class ClientLoginPage extends TestBase {
 		wait_in_seconds(10);
 		wait_for_element_present(clickhere);
 		click_Element_Using_JS(clickhere);
+	}
+	
+	@FindBy(xpath = "//*[@id=\"expensesTab\"]")
+	WebElement expenses;
+	
+	@FindBy(xpath = "//*[@id=\"expensesContUl\"]/div/div[5]/a")
+	WebElement moreexpenses;
+	@FindBy(xpath = "/html/body/div[3]/nav/ul[1]/li[1]/a/img[2]")
+	WebElement logo;
+	
+	//*[@id="expensesContUl"]/div/div[5]/a
+	//html/body/div[3]/nav/ul[1]/li[1]/a/img[1]
+	
+	
+	public void expenses() throws InterruptedException, AWTException {
+		wait_in_seconds(5);
+		wait_for_element_present(expenses);
+		click_Element_Using_JS(expenses);
+		String subscription = driver.findElement(By.xpath("//*[@id=\"expensesContUl\"]/div/div[1]/span[2]")).getText();
+		String packets = driver.findElement(By.xpath("//*[@id=\"expensesContUl\"]/div/div[2]/span[2]")).getText();
+		String forms = driver.findElement(By.xpath("//*[@id=\"expensesContUl\"]/div/div[3]/span[2]")).getText();
+		String total = driver.findElement(By.xpath("//*[@id=\"expensesContUl\"]/div/div[4]/span[2]")).getText();
+
+		System.out.println("Subscription: " + subscription);
+		System.out.println("Packets: " + packets);
+		System.out.println("Forms: " + forms);
+		System.out.println("Total: " + total);
+		
+		wait_for_element_present(moreexpenses);
+		click_Element_Using_JS(moreexpenses);
+		
+		logo.click();
+
 	}
 
 	@SuppressWarnings("deprecation")
@@ -1279,16 +1330,20 @@ public class ClientLoginPage extends TestBase {
 	WebElement viewDocument;
 	@FindBy(xpath = "//a[contains(@href, '#') and @title = 'View/Add Note']")
 	WebElement addNote;
-
+	@FindBy(xpath = "//*[@id=\"state-list\"]")
+	WebElement sname;
 	public void documentsSection() throws InterruptedException, AWTException {
+
 		waitInSeconds(10);
-		click_Element_Using_JS(documentsSection1);
+		//click_Element_Using_JS(documentsSection1);
+		driver.get("http://paypal_dev.test:8080/user/documents");
 		wait_in_seconds(5);
 		uploadFile.click();
 		waitInSeconds(10);
 		wait_for_element_present(documentTypeDEA);
 		click_Element_Using_JS(documentTypeDEA); // documentTypeECFMG.click();
 		wait_in_seconds(5);
+		sname.sendKeys("Wyoming");
 		WebElement upload = driver.findElement(By.xpath("//input[@class='fileUpload inputOtherBrd']"));
 		Actions act = new Actions(driver);
 		act.moveToElement(upload).click().perform();
@@ -1301,6 +1356,7 @@ public class ClientLoginPage extends TestBase {
 		waitInSeconds(10);
 		documentTypeResidency.click();
 		wait_in_seconds(5);
+		sname.sendKeys("Wyoming");
 		WebElement upload1 = driver.findElement(By.xpath("//input[@class='fileUpload inputOtherBrd']"));
 		Actions act1 = new Actions(driver);
 		act1.moveToElement(upload1).click().perform();
@@ -1315,6 +1371,7 @@ public class ClientLoginPage extends TestBase {
 		click_Element_Using_JS(documentTypeStateControlledSubstance);
 		// documentTypeStateControlledSubstance.click();
 		wait_in_seconds(5);
+		sname.sendKeys("Wyoming");
 		WebElement upload2 = driver.findElement(By.xpath("//input[@class='fileUpload inputOtherBrd']"));
 		Actions act2 = new Actions(driver);
 		act2.moveToElement(upload2).click().perform();
@@ -1327,10 +1384,12 @@ public class ClientLoginPage extends TestBase {
 		waitInSeconds(10);
 		documentTypeMedicalLicence.click();
 		wait_in_seconds(5);
+		sname.sendKeys("Wyoming");
 		WebElement upload3 = driver.findElement(By.xpath("//input[@class='fileUpload inputOtherBrd']"));
 		Actions act3 = new Actions(driver);
 		act3.moveToElement(upload3).click().perform();
 		waitInSeconds(5);
+		sname.sendKeys("Wyoming");
 		file_upload("C:\\Users\\Admin\\Downloads\\DerekSmith.odt");
 		waitInSeconds(10);
 		docSubmit.click();
@@ -1339,6 +1398,7 @@ public class ClientLoginPage extends TestBase {
 		waitInSeconds(10);
 		documentTypeMedicalDegree.click();
 		wait_in_seconds(5);
+		sname.sendKeys("Wyoming");
 		WebElement upload4 = driver.findElement(By.xpath("//input[@class='fileUpload inputOtherBrd']"));
 		Actions act4 = new Actions(driver);
 		act4.moveToElement(upload4).click().perform();
@@ -1351,6 +1411,7 @@ public class ClientLoginPage extends TestBase {
 		waitInSeconds(10);
 		documentTypeIntershipcertificate.click();
 		wait_in_seconds(5);
+		sname.sendKeys("Wyoming");
 		WebElement upload5 = driver.findElement(By.xpath("//input[@class='fileUpload inputOtherBrd']"));
 		Actions act5 = new Actions(driver);
 		act5.moveToElement(upload5).click().perform();
@@ -1363,6 +1424,7 @@ public class ClientLoginPage extends TestBase {
 		waitInSeconds(10);
 		documentTypeFellowshipcertificate.click();
 		wait_in_seconds(5);
+		sname.sendKeys("Wyoming");
 		WebElement upload6 = driver.findElement(By.xpath("//input[@class='fileUpload inputOtherBrd']"));
 		Actions act6 = new Actions(driver);
 		act6.moveToElement(upload6).click().perform();
@@ -1375,6 +1437,7 @@ public class ClientLoginPage extends TestBase {
 		waitInSeconds(10);
 		documentTypeECFMG.click();
 		wait_in_seconds(5);
+		sname.sendKeys("Wyoming");
 		WebElement upload7 = driver.findElement(By.xpath("//input[@class='fileUpload inputOtherBrd']"));
 		Actions act7 = new Actions(driver);
 		act7.moveToElement(upload7).click().perform();
@@ -1387,6 +1450,7 @@ public class ClientLoginPage extends TestBase {
 		waitInSeconds(10);
 		documentTypeBoardcertificate.click();
 		wait_in_seconds(5);
+		sname.sendKeys("Wyoming");
 		WebElement upload8 = driver.findElement(By.xpath("//input[@class='fileUpload inputOtherBrd']"));
 		Actions act8 = new Actions(driver);
 		act8.moveToElement(upload8).click().perform();
@@ -1399,6 +1463,7 @@ public class ClientLoginPage extends TestBase {
 		waitInSeconds(10);
 		documentTypeother.click();
 		wait_in_seconds(5);
+		sname.sendKeys("Wyoming");
 		WebElement upload9 = driver.findElement(By.xpath("//input[@class='fileUpload inputOtherBrd']"));
 		Actions act9 = new Actions(driver);
 		act9.moveToElement(upload9).click().perform();
